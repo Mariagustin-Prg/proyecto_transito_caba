@@ -1,11 +1,8 @@
 from fastapi import APIRouter, HTTPException
-import requests, json, os
-from dotenv import load_dotenv
+import requests, json
+from Backend.routes.credentials import api_client, api_secret
 
 
-load_dotenv()
-api_client = os.getenv("API_CLIENT")
-api_secret  = os.getenv("API_SECRET")
 
 router = APIRouter(prefix= "/getData",
                    tags= "getActualData"
@@ -16,4 +13,11 @@ def forecastGTFS():
     response = requests.get(
         f"https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id={api_client}&client_secret={api_secret}")
 
-    return None
+    if response.status_code == 200:
+        try:
+            return response.json()
+        except:
+            return {"error": "Ha habido un problema con la librería JSON."}
+    else:
+        HTTPException(404)
+        return {}

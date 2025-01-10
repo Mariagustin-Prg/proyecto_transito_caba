@@ -3,9 +3,7 @@
 
 # Import libraries
 from fastapi import FastAPI, APIRouter
-import requests, os
-from dotenv import load_dotenv
-
+import requests
 
 # Create fastapi instances
 app = FastAPI()
