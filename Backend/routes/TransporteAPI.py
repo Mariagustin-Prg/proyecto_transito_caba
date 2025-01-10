@@ -1,12 +1,12 @@
 # TransporteAPI.py
-# Created 09/01/25
+# Encode UTF-8
 # Instancia del proyecto en la se hace conexión entre el API pública de Transportes de CABA y la 
 # Base de Datos interna del proyecto
 
 
 # Librerías necesarias para el script
 from fastapi import APIRouter, HTTPException
-import requests, json
+import requests, datetime, json
 from dotenv import load_dotenv
 
 # Cargamos las variables de entorno
@@ -19,7 +19,7 @@ security_code_env = load_dotenv("SECURITY_CODE")
 
 # Crear una instancia de APIRouter
 router = APIRouter(prefix= "/getData",
-                   tags= "getActualData"
+                #    tags= "getActualData"
                    )
 
 
@@ -40,7 +40,7 @@ def status_forecastGTFS():
 
 # Endpoint de la API, especialmente para la parte de test y debuggeo.
 @router.get("/debug/enable_api/{security_key}")
-def enable_api(security_key: str):
+async def enable_api(security_key: str = None):
     '''
     Endpoint para verificar la disponibilidad del API de transporte. \n
     Necesita una clave de seguridad, establecida en el entorno de desarrollo.
@@ -65,3 +65,29 @@ def enable_api(security_key: str):
             "API": "Error",
             "status_code": status
         }
+    
+
+# Función que obtiene la información de la API.
+@router.get("/forecast_gtfs")
+async def get_forecastGTFS() -> dict | HTTPException:
+    '''
+    Llama a la función forecastGTFS del API de transporte, específicamente de la sección de subtes.
+    '''
+    
+    # La petición que se le hace al API
+    await response = requests.get(
+                            f"https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id={api_client}&client_secret={api_secret}"
+
+    )
+    # Que intente retornar el diccionario del resultado de la petición.
+    try:
+        return response.json()
+    
+    # Si ocurre un error con el servidor.
+    except HTTPException as e:
+        raise HTTPException(status_code=400, detail="La solicitud no pudo realizarse con éxito")
+    
+    # Si la conversión a diccionario falla.
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=403, detail= "El resultado de la petición no es válido.")
+
