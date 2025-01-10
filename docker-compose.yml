@@ -9,8 +9,7 @@ services:
     volumes:
       - .:/app  # Sincroniza el directorio local con el contenedor
     environment:
-      - MONGO_URI=mongodb://admin:securepassword@mongo:27017/proyecto_trafico_caba
-
+      - MONGO_URI=mongodb://mongo:27017/trafico_caba
     depends_on:
       - mongo  # Asegura que el servicio de MongoDB se levante antes
 
