@@ -7,4 +7,3 @@ flask
 gunicorn
 requests
 python-dotenv
-motor
