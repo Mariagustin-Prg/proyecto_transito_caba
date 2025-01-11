@@ -5,7 +5,7 @@
 
 
 # Librerías necesarias para el script
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 import requests, datetime, json
 from dotenv import load_dotenv
 
@@ -20,6 +20,7 @@ security_code_env = load_dotenv("SECURITY_CODE")
 # Crear una instancia de APIRouter
 router = APIRouter(prefix= "/getData",
                 #    tags= "getActualData"
+                    responses= {status.HTTP_204: {"message": "No content"}}
                    )
 
 
@@ -75,7 +76,7 @@ async def get_forecastGTFS() -> dict | HTTPException:
     '''
     
     # La petición que se le hace al API
-    await response = requests.get(
+    response = requests.get(
                             f"https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id={api_client}&client_secret={api_secret}"
 
     )
@@ -85,9 +86,13 @@ async def get_forecastGTFS() -> dict | HTTPException:
     
     # Si ocurre un error con el servidor.
     except HTTPException as e:
-        raise HTTPException(status_code=400, detail="La solicitud no pudo realizarse con éxito")
+        raise HTTPException(status_code=503, detail="La solicitud no pudo realizarse con éxito")
     
     # Si la conversión a diccionario falla.
     except json.JSONDecodeError:
-        raise HTTPException(status_code=403, detail= "El resultado de la petición no es válido.")
+        raise HTTPException(status_code=204, detail= "El contenido de la petición no es válido.")
+    
+
+
+
 
