@@ -93,6 +93,10 @@ async def get_forecastGTFS() -> dict | HTTPException:
         raise HTTPException(status_code=204, detail= "El contenido de la petición no es válido.")
     
 
+# Una función que registre los llamados de get_forecastGTFS exitosos.
+async def new_call_forecast():
+    now = datetime.datetime.now()
 
-
+    with open("/db/__forecastGTFS__.json", "wt", encodign= "UTF-8") as file:
+        pass
 
