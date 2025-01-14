@@ -94,9 +94,35 @@ async def get_forecastGTFS() -> dict | HTTPException:
     
 
 # Una función que registre los llamados de get_forecastGTFS exitosos.
-async def new_call_forecast():
+def new_call_forecast() -> None:
+    # Obtiene el momento en que se hace llamada a esta función.
     now = datetime.datetime.now()
 
-    with open("/db/__forecastGTFS__.json", "wt", encodign= "UTF-8") as file:
-        pass
+    # Se crea el registro 
+    call = {
+        "time": now, # Con el momento en que se registra
+        "status": status_forecastGTFS() # El estado del API en el momento
+    }
+
+    # Que intente leer el json que ya existe:
+    try:
+        with open("/db/__forecastGTFS__.json", "rt", encodign= "UTF-8") as file:
+            data = json.loads(file)
+
+    # En caso de no existir el json, que trabaje a partir del siguiente diccionario
+    except FileNotFoundError:
+        data = {
+            "__name__": "__forecast__.json",
+            "calls": []
+        }
+
+    # Agrega el registro a la lista
+    data["calls"].append(call)
+
+    # Modifica el archivo json con la nueva información.
+    with open("/db/__forecast__.json", "wt", encoding="UTF-8") as file:
+        json.dumb(data, file, indent=4)
+
+    # Retorna un None para acabar con la ejecución de la función.
+    return None
 
