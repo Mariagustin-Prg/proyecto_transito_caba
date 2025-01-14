@@ -24,6 +24,9 @@ router = APIRouter(prefix= "/getData",
                    )
 
 
+# -------------------------------------------------------------------
+
+
 # Definir una función que haga una llamada al API para conocer si está disponible.
 def status_forecastGTFS():
     '''
@@ -37,6 +40,9 @@ def status_forecastGTFS():
     # Retorna el status de la respuesta del API
     return response.status_code()
 
+
+
+# -------------------------------------------------------------------
 
 
 # Endpoint de la API, especialmente para la parte de test y debuggeo.
@@ -68,6 +74,9 @@ async def enable_api(security_key: str = None):
         }
     
 
+# -------------------------------------------------------------------
+
+
 # Función que obtiene la información de la API.
 @router.get("/forecast_gtfs")
 async def get_forecastGTFS() -> dict | HTTPException:
@@ -93,6 +102,9 @@ async def get_forecastGTFS() -> dict | HTTPException:
         raise HTTPException(status_code=204, detail= "El contenido de la petición no es válido.")
     
 
+# -------------------------------------------------------------------
+
+
 # Una función que registre los llamados de get_forecastGTFS exitosos.
 def new_call_forecast() -> None:
     # Obtiene el momento en que se hace llamada a esta función.
@@ -106,13 +118,13 @@ def new_call_forecast() -> None:
 
     # Que intente leer el json que ya existe:
     try:
-        with open("/db/__forecastGTFS__.json", "rt", encodign= "UTF-8") as file:
+        with open("/db/__calls__.json", "rt", encodign= "UTF-8") as file:
             data = json.loads(file)
 
     # En caso de no existir el json, que trabaje a partir del siguiente diccionario
     except FileNotFoundError:
         data = {
-            "__name__": "__forecast__.json",
+            "__name__": "__calls__.json",
             "calls": []
         }
 
@@ -120,11 +132,14 @@ def new_call_forecast() -> None:
     data["calls"].append(call)
 
     # Modifica el archivo json con la nueva información.
-    with open("/db/__forecast__.json", "wt", encoding="UTF-8") as file:
+    with open("/db/__calls__.json", "wt", encoding="UTF-8") as file:
         json.dumb(data, file, indent=4)
 
     # Retorna un None para acabar con la ejecución de la función.
     return None
+
+
+# -------------------------------------------------------------------
 
 
 # La función que obtiene el último llamado exitoso al API.
@@ -132,7 +147,7 @@ def last_conection_forecast() -> None:
 
     # Que lea el archivo json:
     try:
-        with open("/db/__forecast__.json", "rt", encoding="UTF-8") as file:
+        with open("/db/__calls__.json", "rt", encoding="UTF-8") as file:
             data = json.loads(file)
 
     # Si no existe, retorna un None
@@ -145,3 +160,5 @@ def last_conection_forecast() -> None:
     for d in calls:
         if d["status"] == 200:
             return d
+
+
