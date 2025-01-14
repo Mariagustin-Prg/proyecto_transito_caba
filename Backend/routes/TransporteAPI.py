@@ -126,3 +126,22 @@ def new_call_forecast() -> None:
     # Retorna un None para acabar con la ejecución de la función.
     return None
 
+
+# La función que obtiene el último llamado exitoso al API.
+def last_conection_forecast() -> None:
+
+    # Que lea el archivo json:
+    try:
+        with open("/db/__forecast__.json", "rt", encoding="UTF-8") as file:
+            data = json.loads(file)
+
+    # Si no existe, retorna un None
+    except FileNotFoundError:
+        return None
+
+    # Obtenemos el último registro exitoso
+    calls = data["calls"]
+
+    for d in calls:
+        if d["status"] == 200:
+            return d
