@@ -172,25 +172,40 @@ def last_conection_forecast() -> None:
 
 # La función que crea los registros en los json de /db.
 async def post_forecast() -> None:
+
+    # Crea un ID único con el método de datetime
     id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
+    # Para evitar errores declaramos un bloque Try.
     try:
+        # Llamar a la función get_forecastGTFS().
         forecast_dicc = get_forecastGTFS(id= id)
 
+    # En caso de errores en el funcionamiento interno de la función, trabaja este Except.
     except HTTPException | json.JSONDecodeError:
+        # Retorna un InternalServerError con el siguiente detalle:
         raise HTTPException(status_code=500, detail= "El servidor no ha respondido a la solicitud")
 
+    # Si la operación anterior funciona correctamente, continúa con el código.
+
+    # Crea el registro en el json de __calls__ con la función new_call_forecast().
     new_call_forecast(id= id)
 
-    with open("/db/__data__.json", "wt", encoding="UTF-8") as file:
+    # Con este fragmento modificamos el json de __data__.json
+    with open("/db/__data__.json", encoding="UTF-8") as file:
+        # Leemos el archivo
         data = json.loads(file)
 
+        # Si la lista contenida en el json contiene 5 o más elementos.
         if len(data) >= 5:
+            # Eliminamos el último elemento de la lista.
             data.pop()
+            # Insertamos en la primer posición el diccionario con la respuesta del API.
             data.insert(0, forecast_dicc)
-
+        
+        # Si no, que inserte en la primer posición el diccionario.
         else:
             data.insert(0, forecast_dicc)
 
-        
+        # Que modifique el archivo con la nueva información.
         json.dumb(file, data, indent=4)
