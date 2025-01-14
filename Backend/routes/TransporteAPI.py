@@ -47,7 +47,7 @@ def status_forecastGTFS():
 
 # Endpoint de la API, especialmente para la parte de test y debuggeo.
 @router.get("/debug/enable_api/{security_key}")
-async def enable_api(security_key: str = None):
+async def enable_api(security_key: str | None = None):
     '''
     Endpoint para verificar la disponibilidad del API de transporte. \n
     Necesita una clave de seguridad, establecida en el entorno de desarrollo.
@@ -78,8 +78,7 @@ async def enable_api(security_key: str = None):
 
 
 # Función que obtiene la información de la API.
-@router.get("/forecast_gtfs")
-async def get_forecastGTFS() -> dict | HTTPException:
+def get_forecastGTFS(id: str) -> dict | HTTPException:
     '''
     Llama a la función forecastGTFS del API de transporte, específicamente de la sección de subtes.
     '''
@@ -91,7 +90,9 @@ async def get_forecastGTFS() -> dict | HTTPException:
     )
     # Que intente retornar el diccionario del resultado de la petición.
     try:
-        return response.json()
+        info = response.json()
+        info["id"] = id
+        return info
     
     # Si ocurre un error con el servidor.
     except HTTPException as e:
@@ -106,14 +107,15 @@ async def get_forecastGTFS() -> dict | HTTPException:
 
 
 # Una función que registre los llamados de get_forecastGTFS exitosos.
-def new_call_forecast() -> None:
+def new_call_forecast(id: str) -> None:
     # Obtiene el momento en que se hace llamada a esta función.
     now = datetime.datetime.now()
 
     # Se crea el registro 
     call = {
+        "id": id,
         "time": now, # Con el momento en que se registra
-        "status": status_forecastGTFS() # El estado del API en el momento
+        "status": status_forecastGTFS(), # El estado del API en el momento
     }
 
     # Que intente leer el json que ya existe:
@@ -161,4 +163,34 @@ def last_conection_forecast() -> None:
         if d["status"] == 200:
             return d
 
+    # En caso de no encontrar un registro, retorna un NotFound status.
+    raise HTTPException(status_code=404, detail= "No se encontró la última conexión exitosa con el API")
 
+
+# -------------------------------------------------------------------
+
+
+# La función que crea los registros en los json de /db.
+async def post_forecast() -> None:
+    id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+
+    try:
+        forecast_dicc = get_forecastGTFS(id= id)
+
+    except HTTPException | json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail= "El servidor no ha respondido a la solicitud")
+
+    new_call_forecast(id= id)
+
+    with open("/db/__data__.json", "wt", encoding="UTF-8") as file:
+        data = json.loads(file)
+
+        if len(data) >= 5:
+            data.pop()
+            data.insert(0, forecast_dicc)
+
+        else:
+            data.insert(0, forecast_dicc)
+
+        
+        json.dumb(file, data, indent=4)
