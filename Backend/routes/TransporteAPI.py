@@ -18,9 +18,9 @@ security_code_env = load_dotenv("SECURITY_CODE")
 
 
 # Crear una instancia de APIRouter
-router = APIRouter(prefix= "/getData",
-                #    tags= "getActualData"
-                    responses= {status.HTTP_204: {"message": "No content"}}
+router = APIRouter(prefix= "/api-transporte",
+                    tags= "API-Transporte"
+                    # responses= {status.HTTP_204: {"message": "No content"}}
                    )
 
 
@@ -108,6 +108,9 @@ def get_forecastGTFS(id: str) -> dict | HTTPException:
 
 # Una función que registre los llamados de get_forecastGTFS exitosos.
 def new_call_forecast(id: str) -> None:
+    '''
+    Crea un registro en el json con la fecha y el status de la conexión con el API.
+    '''
     # Obtiene el momento en que se hace llamada a esta función.
     now = datetime.datetime.now()
 
@@ -147,6 +150,9 @@ def new_call_forecast(id: str) -> None:
 # La función que obtiene el último llamado exitoso al API.
 def last_conection_forecast() -> None:
 
+    '''
+    Verifica el último status_code 200.
+    '''
     # Que lea el archivo json:
     try:
         with open("/db/__calls__.json", "rt", encoding="UTF-8") as file:
@@ -172,7 +178,9 @@ def last_conection_forecast() -> None:
 
 # La función que crea los registros en los json de /db.
 async def post_forecast() -> None:
-
+    '''
+    Postea en __data__ el resultado de ForecastGTFS del API y también guarda el llamado en __calls__
+    '''
     # Crea un ID único con el método de datetime
     id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -209,3 +217,5 @@ async def post_forecast() -> None:
 
         # Que modifique el archivo con la nueva información.
         json.dumb(file, data, indent=4)
+
+
