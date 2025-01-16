@@ -2,7 +2,7 @@ from Backend.models.linea_subte import LineaSubte
 from Backend.models.estacion_subte import EstacionSubte
 from datetime import date, time, datetime
 
-class Subte:
+class MovilSubte:
     
     '''
     Objeto con el cual se recopila toda la información de viajes, horarios, líneas, reprogramaciones,
