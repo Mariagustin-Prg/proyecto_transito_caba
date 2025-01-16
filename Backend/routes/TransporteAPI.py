@@ -28,7 +28,7 @@ router = APIRouter(prefix= "/api-transporte",
 
 
 # Definir una función que haga una llamada al API para conocer si está disponible.
-def status_forecastGTFS():
+def status_forecastGTFS() -> int:
     '''
     Hace una llamada a la API y retorna el status en el que se encuentra.
     '''
@@ -148,7 +148,7 @@ def new_call_forecast(id: str) -> None:
 
 
 # La función que obtiene el último llamado exitoso al API.
-def last_conection_forecast() -> None:
+def last_conection_forecast() -> dict | None | HTTPException:
 
     '''
     Verifica el último status_code 200.
