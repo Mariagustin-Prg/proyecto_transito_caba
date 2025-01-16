@@ -110,9 +110,11 @@ class EstacionSubte:
         args:
             siguiente (EstacionSubte): La próxima estación de la línea.
         '''
-        self.siguiente = siguiente
+        if siguiente != self: 
+            self.siguiente = siguiente
 
     def anterior_estacion(self,
                 anterior) -> None:
         '''Establece la relación de orden con la estación anterior.'''
-        self.anterior = anterior
+        if anterior != self:
+            self.anterior = anterior
