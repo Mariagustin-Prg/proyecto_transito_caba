@@ -123,7 +123,7 @@ def new_call_forecast(id: str) -> None:
 
     # Que intente leer el json que ya existe:
     try:
-        with open("/db/__calls__.json", "rt", encodign= "UTF-8") as file:
+        with open("../db/__calls__.json", "rt", encodign= "UTF-8") as file:
             data = json.loads(file)
 
     # En caso de no existir el json, que trabaje a partir del siguiente diccionario
@@ -137,7 +137,7 @@ def new_call_forecast(id: str) -> None:
     data["calls"].append(call)
 
     # Modifica el archivo json con la nueva información.
-    with open("/db/__calls__.json", "wt", encoding="UTF-8") as file:
+    with open("../db/__calls__.json", "wt", encoding="UTF-8") as file:
         json.dumb(data, file, indent=4)
 
     # Retorna un None para acabar con la ejecución de la función.
@@ -155,7 +155,7 @@ def last_conection_forecast() -> dict | None | HTTPException:
     '''
     # Que lea el archivo json:
     try:
-        with open("/db/__calls__.json", "rt", encoding="UTF-8") as file:
+        with open("../db/__calls__.json", "rt", encoding="UTF-8") as file:
             data = json.loads(file)
 
     # Si no existe, retorna un None
@@ -200,7 +200,7 @@ async def post_forecast() -> None:
     new_call_forecast(id= id)
 
     # Con este fragmento modificamos el json de __data__.json
-    with open("/db/__data__.json", encoding="UTF-8") as file:
+    with open("../db/__data__.json", encoding="UTF-8") as file:
         # Leemos el archivo
         data = json.loads(file)
 
