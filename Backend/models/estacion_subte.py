@@ -1,3 +1,32 @@
+# estacion_subte.py
+'''
+Encoding: UTF-8
+
+estacion_subte.py
+------
+
+Este módulo contiene la clase `EstacionSubte`, que se utiliza para organizar, guardar y obtener fácilmente la información de las estaciones de subte.
+
+Clases:
+- `EstacionSubte`: Representa una estación de subte, con métodos para establecer la línea principal, conectar con otras líneas, definir coordenadas, interrumpir y activar el servicio, establecer la siguiente y anterior estación.
+
+Ejemplo de uso:
+---------------
+"Estación A"
+>>> estacion = EstacionSubte("Estación A")
+"Estación A"
+>>> estacion.establecer_linea(linea)
+"Estación A"
+>>> estacion.conectar_lineas(linea)
+>>> estacion.definir_coordenadas(12.345, 67.890)
+>>> estacion.interrupcion_de_servicio()
+>>> estacion.actividad
+False
+>>> estacion.activacion_de_servicio()
+>>> estacion.actividad
+True
+'''
+
 from Backend.models.linea_subte import LineaSubte
 
 class EstacionSubte:

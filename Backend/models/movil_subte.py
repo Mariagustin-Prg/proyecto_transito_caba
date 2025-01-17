@@ -1,3 +1,30 @@
+"""
+Este módulo define la clase MovilSubte, la cual se utiliza para recopilar información
+relacionada con los viajes de los vehículos en la red de subterráneos, incluyendo horarios,
+líneas, retrasos, cancelaciones, entre otros.
+
+Clases:
+    MovilSubte: Representa un vehículo en la red de subterráneos y almacena información
+                sobre sus viajes y horarios.
+
+Dependencias:
+    - Backend.models.linea_subte.LineaSubte
+    - Backend.models.estacion_subte.EstacionSubte
+    - datetime.date
+    - datetime.time
+    - datetime.datetime
+
+Ejemplo de uso:
+---------------
+"Vehiculo(111)"
+>>> vehiculo = MovilSubte(date(2021, 10, 1), date(2021, 10, 1), linea, time(8, 0), time(8, 30), retraso=0, codigo_vehiculo="111")
+>>> vehiculo.modificar_retraso(300)
+>>> vehiculo.retraso
+300
+>>> print(vehiculo)
+"Vehiculo(111)"
+"""
+
 from Backend.models.linea_subte import LineaSubte
 from Backend.models.estacion_subte import EstacionSubte
 from datetime import date, time, datetime
@@ -84,11 +111,11 @@ class MovilSubte:
         '''
         return f"Vehículo({self.codigo_vehiculo})"
     
-    def __repr__(self) -> str:
-        '''
-        Permite obtener una representación del objeto.
-        '''
-        return f"Vehículo({self.codigo_vehiculo})"
+    # def __repr__(self) -> str:
+    #     '''
+    #     Permite obtener una representación del objeto.
+    #     '''
+    #     return f"Vehículo({self.codigo_vehiculo})"
     
     def __eq__(self, other) -> bool:
         '''

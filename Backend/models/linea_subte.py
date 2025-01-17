@@ -1,7 +1,23 @@
 # linea_subte.py
-# Encoding: UTF-8
+"""
+linea_subte.py
+--------------
+Este módulo contiene la clase `LineaSubte`, que se utiliza para organizar, guardar y obtener fácilmente la información de las líneas de subte.
+Clases:
+- `LineaSubte`: Representa una línea de subte, con métodos para agregar estaciones, listar estaciones, invertir la dirección de la línea, establecer conexiones con otras líneas y cambiar el estado de actividad de la línea.
 
-# Las clases utilizadas para organizar, guardar y obtener fácilmente la información de los subtes.
+Ejemplo de uso:
+---------------
+"Estación A"
+>>> linea.invertir_dirección()
+"Estación A"
+>>> linea.interrupcion_servicio()
+>>> linea.actividad
+False
+>>> linea.activacion_servicio()
+>>> linea.actividad
+True
+"""
 
 from Backend.models.estacion_subte import EstacionSubte
 
