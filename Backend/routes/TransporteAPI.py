@@ -181,7 +181,7 @@ def last_conection_forecast() -> dict | None | HTTPException:
 
 
 # La función que crea los registros en los json de /db.
-router.get("/post-forecast", response_model= 200)
+@router.post("/post-forecast", response_model= 201)
 async def post_forecast() -> None:
     '''
     Postea en __data__ el resultado de ForecastGTFS del API y también guarda el llamado en __calls__
