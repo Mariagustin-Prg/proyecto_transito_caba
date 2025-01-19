@@ -3,8 +3,9 @@ matplotlib
 seaborn
 fastapi
 plotly
-flask
+# flask
 gunicorn
 requests
 python-dotenv
 motor
+httpx
