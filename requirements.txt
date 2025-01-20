@@ -1,9 +1,4 @@
-pandas
-matplotlib
-seaborn
 fastapi
-plotly
-# flask
 gunicorn
 requests
 python-dotenv
