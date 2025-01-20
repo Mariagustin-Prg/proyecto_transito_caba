@@ -4,13 +4,14 @@
 # Import libraries
 from fastapi import FastAPI, APIRouter
 import requests
-from routes import TransporteAPI
+from routes import TransporteAPI, API_subtes
 
 # Create fastapi instances
 app = FastAPI()
 
 # Incluir los routers.
 app.include_router(TransporteAPI.router)
+app.include_router(API_subtes.router)
 
 # Create main route
 @app.get("/")
