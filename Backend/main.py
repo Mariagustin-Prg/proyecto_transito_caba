@@ -4,7 +4,10 @@
 # Import libraries
 from fastapi import FastAPI, APIRouter
 import requests
-from routes import TransporteAPI, API_subtes
+from routes import (
+    TransporteAPI,
+    API_subtes
+    )
 
 # Create fastapi instances
 app = FastAPI()
