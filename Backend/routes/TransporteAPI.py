@@ -6,30 +6,36 @@
 
 # Librerías necesarias para el script
 from fastapi import APIRouter, HTTPException, status
-import requests, datetime, json
+import requests, datetime, json, os
 from dotenv import load_dotenv
 
 # Cargamos las variables de entorno
-load_dotenv()
+load_dotenv(dotenv_path= "../config/.env", encoding='UTF-8')
 
-api_client = load_dotenv("API_CLIENT")
-api_secret = load_dotenv("API_SECRET")
-security_code_env = load_dotenv("SECURITY_CODE")
+api_client = os.getenv("api_client")
+api_secret = os.getenv("api_secret")
+security_code_env = os.getenv("SECURITY_CODE")
 
 
 # Crear una instancia de APIRouter
 router = APIRouter(prefix= "/api-transporte",
-                    tags= "API-Transporte"
+                    tags= ["API-Transporte"]
                     # responses= {status.HTTP_204: {"message": "No content"}}
                    )
 
 
 # -------------------------------------------------------------------
 
+@router.get("/")
+def main():
+    return {
+        "status": "success"
+    }
+
 
 # Definir una función que haga una llamada al API para conocer si está disponible.
-@router.get("/status", response_model= 200)
-def status_forecastGTFS() -> int:
+# @router.get("/status")
+def status_forecastGTFS():
     '''
     Hace una llamada a la API y retorna el status en el que se encuentra.
     '''
@@ -39,7 +45,13 @@ def status_forecastGTFS() -> int:
         f"https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id={api_client}&client_secret={api_secret}")
 
     # Retorna el status de la respuesta del API
-    return response.status_code()
+    try:    
+        return {
+            "status_code": response.status_code}
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=503, detail={"message": "La solicitud no pudo realizarse con éxito"})
 
 
 
@@ -47,7 +59,7 @@ def status_forecastGTFS() -> int:
 
 
 # Endpoint de la API, especialmente para la parte de test y debuggeo.
-@router.get("/debug/enable_api/{security_key}", response_model= 200)
+@router.get("/debug/enable_api")
 async def enable_api(security_key: str | None = None):
     '''
     Endpoint para verificar la disponibilidad del API de transporte. \n
@@ -55,23 +67,23 @@ async def enable_api(security_key: str | None = None):
     '''
     # Verifica que se este ingresando la clave de seguridad correcta
     if security_key != security_code_env:
-        return {
+        raise HTTPException(status_code=401, detail= {
             "message": "La clave ingresada es inválida."
-        }
+        })
 
     # Obtenemos el status del API
     status = status_forecastGTFS()
 
     
-    if status == 200: # Si retorna 200, el API está activa y funcionando.
+    if status['status_code'] == 200: # Si retorna 200, el API está activa y funcionando.
         return {
             "API": "Disponible",
-            "status_code": status
+            "status_code": status['status_code']
         }
     else:             # el API tiene algún problema al realizar la solicitud.
         return {
             "API": "Error",
-            "status_code": status
+            "status_code": status['status_code']
         }
     
 
@@ -79,8 +91,8 @@ async def enable_api(security_key: str | None = None):
 
 
 # Función que obtiene la información de la API.
-@router.get("/get-forecastgtfs", response_model= 200)
-def get_forecastGTFS(id: str) -> dict | HTTPException:
+@router.get("/get-forecastgtfs")
+def get_forecastGTFS(id: str):
     '''
     Llama a la función forecastGTFS del API de transporte, específicamente de la sección de subtes.
     '''
@@ -109,8 +121,8 @@ def get_forecastGTFS(id: str) -> dict | HTTPException:
 
 
 # Una función que registre los llamados de get_forecastGTFS exitosos.
-@router.post("/call-forecast", response_model= 201)
-def new_call_forecast(id: str) -> None:
+@router.post("/call-forecast")
+def new_call_forecast(id: str):
     '''
     Crea un registro en el json con la fecha y el status de la conexión con el API.
     '''
@@ -151,8 +163,8 @@ def new_call_forecast(id: str) -> None:
 
 
 # La función que obtiene el último llamado exitoso al API.
-@router.get("/last-conection", response_model=200)
-def last_conection_forecast() -> dict | None | HTTPException:
+@router.get("/last-conection")
+def last_conection_forecast():
 
     '''
     Verifica el último status_code 200.
@@ -181,8 +193,8 @@ def last_conection_forecast() -> dict | None | HTTPException:
 
 
 # La función que crea los registros en los json de /db.
-@router.post("/post-forecast", response_model= 201)
-async def post_forecast() -> None:
+@router.post("/post-forecast")
+async def post_forecast():
     '''
     Postea en __data__ el resultado de ForecastGTFS del API y también guarda el llamado en __calls__
     '''
