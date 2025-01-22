@@ -127,7 +127,7 @@ def new_call_forecast(id: str):
     Crea un registro en el json con la fecha y el status de la conexión con el API.
     '''
     # Obtiene el momento en que se hace llamada a esta función.
-    now = datetime.datetime.now()
+    now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M")
 
     # Se crea el registro 
     call = {
@@ -138,8 +138,8 @@ def new_call_forecast(id: str):
 
     # Que intente leer el json que ya existe:
     try:
-        with open("../db/__calls__.json", "rt", encodign= "UTF-8") as file:
-            data = json.loads(file)
+        with open(".\db\__calls__.json", "rt", encoding= "UTF-8") as file:
+            data = json.load(file)
 
     # En caso de no existir el json, que trabaje a partir del siguiente diccionario
     except FileNotFoundError:
@@ -152,11 +152,11 @@ def new_call_forecast(id: str):
     data["calls"].append(call)
 
     # Modifica el archivo json con la nueva información.
-    with open("../db/__calls__.json", "wt", encoding="UTF-8") as file:
-        json.dumb(data, file, indent=4)
+    with open(".\db\__calls__.json", "wt", encoding="UTF-8") as file:
+        json.dump(data, file, indent=4)
 
-    # Retorna un None para acabar con la ejecución de la función.
-    return None
+    # Retorna un json para acabar con la ejecución de la función.
+    return {'detail': 'Succesfull post.', 'data': data}
 
 
 # -------------------------------------------------------------------
