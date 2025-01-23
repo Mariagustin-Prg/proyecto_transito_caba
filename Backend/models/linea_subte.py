@@ -49,7 +49,7 @@ class LineaSubte:
         self.codigo = codigo
         self.direccion = direccion
         self.actividad = actividad
-        self.estaciones = []
+        self.estaciones = None
         self.conexiones = []
 
     def __str__(self) -> str:
@@ -60,51 +60,51 @@ class LineaSubte:
         '''
         return f"{self.nombre_linea}"
 
-    def agregar_estacion(self,
-                         nueva_estacion: EstacionSubte,
-                         estacion_terminal: bool = False,
-                         posicion_intermedia: int | None = None) -> None | IndexError:
-        '''
-        method
-        ------ 
-        agregar_estacion(nueva_estacion, estacion_terminal, posicion_intermedia):
-            Agrega una nueva estación a la línea de subte.
+    # def agregar_estacion(self,
+    #                      nueva_estacion: EstacionSubte,
+    #                      estacion_terminal: bool = False,
+    #                      posicion_intermedia: int | None = None) -> None | IndexError:
+    #     '''
+    #     method
+    #     ------ 
+    #     agregar_estacion(nueva_estacion, estacion_terminal, posicion_intermedia):
+    #         Agrega una nueva estación a la línea de subte.
 
-        args:
-            `nueva_estacion`: Estación a agregar.
-            `estacion_terminal`: Indica si la estación es terminal.
-            `posicion_intermedia`: Posición en la que se desea agregar la estación.
+    #     args:
+    #         `nueva_estacion`: Estación a agregar.
+    #         `estacion_terminal`: Indica si la estación es terminal.
+    #         `posicion_intermedia`: Posición en la que se desea agregar la estación.
 
-        return:
-            None
+    #     return:
+    #         None
 
-        raises:
-            IndexError: Si el índice indicado en la posición de la Línea es inválido.
+    #     raises:
+    #         IndexError: Si el índice indicado en la posición de la Línea es inválido.
 
-        Example
-        -------
-        >>> linea = LineaSubte("Linea A", "A")
-        >>> estacion = EstacionSubte("Estación A", 0, 0)
-        >>> linea.agregar_estacion(estacion)
+    #     Example
+    #     -------
+    #     >>> linea = LineaSubte("Linea A", "A")
+    #     >>> estacion = EstacionSubte("Estación A", 0, 0)
+    #     >>> linea.agregar_estacion(estacion)
 
-        '''
+    #     '''
 
-    # Agrega la estación a la línea de subte.
-        try:
-            # Verifica si la estación se debe agregar en una posición intermedia.
-            if posicion_intermedia is not None:
-                # La inserta en la posición indicada.
-                self.estaciones.insert(posicion_intermedia, nueva_estacion)
-            # Si no se indica una posición, la agrega al final de la lista.
-            else:
-                self.estaciones.append(nueva_estacion)
-                # En caso de ser una estación terminal, convierte la lista en una tupla.
-                if estacion_terminal:
-                    self.estaciones = tuple(self.estaciones)
-        # Captura el error en caso de que el índice sea inválido. Es decir, cuando la posición indicada no existe.
-        except IndexError:
-            # Lanza una excepción.
-            raise IndexError("El índice indicado en la posición de la Línea es inválido.")
+    # # Agrega la estación a la línea de subte.
+    #     try:
+    #         # Verifica si la estación se debe agregar en una posición intermedia.
+    #         if posicion_intermedia is not None:
+    #             # La inserta en la posición indicada.
+    #             self.estaciones.insert(posicion_intermedia, nueva_estacion)
+    #         # Si no se indica una posición, la agrega al final de la lista.
+    #         else:
+    #             self.estaciones.append(nueva_estacion)
+    #             # En caso de ser una estación terminal, convierte la lista en una tupla.
+    #             if estacion_terminal:
+    #                 self.estaciones = tuple(self.estaciones)
+    #     # Captura el error en caso de que el índice sea inválido. Es decir, cuando la posición indicada no existe.
+    #     except IndexError:
+    #         # Lanza una excepción.
+    #         raise IndexError("El índice indicado en la posición de la Línea es inválido.")
 
     def __listar__(self) -> str:
         '''
@@ -121,13 +121,19 @@ class LineaSubte:
         >>> linea.__listar__()
         "Estación A -> Estación B"
         '''
-        return f"{" -> ".join(self.estaciones)}"
+        str_estaciones = ""
+        ctrl = self.terminal_inicio
+        while ctrl != None:
+            str_estaciones += f"{ctrl} -> "
+            ctrl = ctrl.siguiente
+
+        return str_estaciones
     
-    def invertir_dirección(self) -> None:
-        '''
-        Invierte el orden de las estaciones en la línea.
-        '''
-        self.estaciones = self.estaciones[::-1]
+    # def invertir_dirección(self) -> None:
+    #     '''
+    #     Invierte el orden de las estaciones en la línea.
+    #     '''
+    #     self.estaciones = self.estaciones[::-1]
 
     def conexion_otras_lineas(self,
                               linea_subte_conexion,
@@ -159,3 +165,10 @@ class LineaSubte:
     def activacion_servicio(self) -> None:
         '''Cambia el estado de la línea a activa.'''
         self.actividad = True
+
+    def set_terminales(self, start, end) -> None:
+        '''
+        Establece las estaciones terminales de la línea.
+        '''
+        self.terminal_inicio = start
+        self.terminal_fin = end
