@@ -19,7 +19,7 @@ False
 True
 """
 
-from Backend.models.estacion_subte import EstacionSubte
+# from Backend.models.estacion_subte import EstacionSubte
 
 class LineaSubte:
     def __init__(self,
@@ -59,6 +59,9 @@ class LineaSubte:
         "Linea A"
         '''
         return f"{self.nombre_linea}"
+    
+    def __repr__(self):
+        return self.nombre_linea
 
     # def agregar_estacion(self,
     #                      nueva_estacion: EstacionSubte,
@@ -122,12 +125,13 @@ class LineaSubte:
         "Estación A -> Estación B"
         '''
         str_estaciones = ""
-        ctrl = self.terminal_inicio
+
+        ctrl = self.terminal_inicio if self.direccion == 0 else self.terminal_fin
         while ctrl != None:
             str_estaciones += f"{ctrl} -> "
-            ctrl = ctrl.siguiente
+            ctrl = ctrl.siguiente if self.direccion == 0 else ctrl.anterior
 
-        return str_estaciones
+        return str_estaciones[:-4]
     
     # def invertir_dirección(self) -> None:
     #     '''
@@ -135,28 +139,28 @@ class LineaSubte:
     #     '''
     #     self.estaciones = self.estaciones[::-1]
 
-    def conexion_otras_lineas(self,
-                              linea_subte_conexion,
-                              estacion_conectada: EstacionSubte) -> None:
-        '''
-        `method` conexion_otras_lineas(linea_subte_conexion, estacion_conectada):
-            Establece la conexión entre dos líneas de subte.
+    # def conexion_otras_lineas(self,
+    #                           linea_subte_conexion,
+    #                           estacion_conectada: EstacionSubte) -> None:
+    #     '''
+    #     `method` conexion_otras_lineas(linea_subte_conexion, estacion_conectada):
+    #         Establece la conexión entre dos líneas de subte.
 
-        args:
-            `linea_subte_conexion`: Línea de subte a la que se conecta la línea principal.
-            `estacion_conectada`: Estación en la que se realiza la conexión.
+    #     args:
+    #         `linea_subte_conexion`: Línea de subte a la que se conecta la línea principal.
+    #         `estacion_conectada`: Estación en la que se realiza la conexión.
 
-        return:
-            None
+    #     return:
+    #         None
 
-        raises:
-            None
+    #     raises:
+    #         None
         
-        '''
-        self.conexion.append( 
-            {"Linea conectada": linea_subte_conexion,
-            "Estación de conexión": estacion_conectada}
-            )
+    #     '''
+    #     self.conexion.append( 
+    #         {"Linea conectada": linea_subte_conexion,
+    #         "Estación de conexión": estacion_conectada}
+    #         )
         
     def interrupcion_servicio(self) -> None:
         '''Cambia el estado de la línea a inactiva.'''
