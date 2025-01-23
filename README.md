@@ -1,21 +1,26 @@
 # Proyecto de Transito de Ciudad de Buenos Aires
 ---------
-(![PYTHON](https://www.python.org))
+[PYTHON](https://www.python.org)
 
 Este proyecto proporciona una serie de funcionalidades mucho más amigable con el usuario para realizar distintos análisis a la red de transporte de Ciudad Autónoma de Buenos Aires.
 
 ## Backend
  
  |-> db 
+
  |-> models
+
  |-> schemas
+
  |-> routes
+
  |-> tests
+
  |-> main.py
 
 En este directorio van a encontrar todo lo relacionado a la construcción, validación, modelado de datos, y posteo de los distintos endpoints que nos brinda el API del que se alimenta todo este proyecto.
 
--> [API-TRANSPORTE](https://www.api-transporte.com/console)
+-> [API-TRANSPORTE](https://api-transporte.buenosaires.gob.ar/console)
 
 ## Otros recursos
 
