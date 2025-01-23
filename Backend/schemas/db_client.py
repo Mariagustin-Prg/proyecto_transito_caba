@@ -8,7 +8,7 @@ DB_USER = os.getenv("DB_USER")
 DB_PWORD = os.getenv("DB_PWORD")
 
 # Connection string
-connection_string = "mongodb+srv://{DB_USER}:{DB_PWORD}@transito-caba.mongodb.net/"
+connection_string = f"mongodb://{DB_USER}:{DB_PWORD}@transito-caba"
 
 # Create a MongoClient
 clientDB = MongoClient(connection_string)
