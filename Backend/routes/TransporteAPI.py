@@ -171,18 +171,18 @@ def last_conection_forecast():
     '''
     # Que lea el archivo json:
     try:
-        with open("../db/__calls__.json", "rt", encoding="UTF-8") as file:
-            data = json.loads(file)
+        with open(".\db\__calls__.json", "rt", encoding="UTF-8") as file:
+            data = json.load(file)
 
     # Si no existe, retorna un None
     except FileNotFoundError:
-        return None
+        raise HTTPException(status_code= 404, detail="No se encontró el archivo.")
 
     # Obtenemos el último registro exitoso
-    calls = data["calls"]
+    calls = data["calls"][::-1]
 
     for d in calls:
-        if d["status"] == 200:
+        if d["status"]['status_code'] == 200:
             return d
 
     # En caso de no encontrar un registro, retorna un NotFound status.
@@ -199,7 +199,7 @@ async def post_forecast():
     Postea en __data__ el resultado de ForecastGTFS del API y también guarda el llamado en __calls__
     '''
     # Crea un ID único con el método de datetime
-    id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    id = datetime.datetime.now().strftime("<%Y-%m-%d>|<%H:%M:%S>")
 
     # Para evitar errores declaramos un bloque Try.
     try:
@@ -207,9 +207,12 @@ async def post_forecast():
         forecast_dicc = get_forecastGTFS(id= id)
 
     # En caso de errores en el funcionamiento interno de la función, trabaja este Except.
-    except HTTPException | json.JSONDecodeError:
+    except HTTPException:
         # Retorna un InternalServerError con el siguiente detalle:
         raise HTTPException(status_code=500, detail= "El servidor no ha respondido a la solicitud")
+
+    except json.JSONDecodeError:
+        raise HTTPException(status_code= 204, detail= "No content available")
 
     # Si la operación anterior funciona correctamente, continúa con el código.
 
@@ -217,7 +220,7 @@ async def post_forecast():
     new_call_forecast(id= id)
 
     # Con este fragmento modificamos el json de __data__.json
-    with open("../db/__data__.json", encoding="UTF-8") as file:
+    with open(".\db\__data__.json", encoding="UTF-8") as file:
         # Leemos el archivo
         data = json.loads(file)
 
@@ -236,3 +239,4 @@ async def post_forecast():
         json.dumb(file, data, indent=4)
 
 
+    return {"request": "post", "status": "success"}
