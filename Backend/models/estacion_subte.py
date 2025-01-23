@@ -65,9 +65,13 @@ class EstacionSubte:
         self.terminal = terminal
         self.actividad = actividad
         self.anden_central = anden_central
+        self.special_case = None
 
     def __str__(self) -> None:
-        return f"Estacion({self.nombre_estacion})"
+        return f"{self.nombre_estacion}"
+    
+    def __repr__(self) -> str:
+        return self.nombre_estacion
 
     def establecer_linea(self, 
                 linea_: LineaSubte,
