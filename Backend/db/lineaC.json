@@ -1,0 +1,92 @@
+{
+    "Linea": "C",
+    "__init__": {
+        "nombre_linea": "Linea C",
+        "codigo": "LineaC",
+        "direccion": 0,
+        "actividad": 1
+    },
+    "Estaciones": [
+        {
+            "nombre_estacion": "Retiro",
+            "latitud": -34.5917,
+            "longitud": -58.3747,
+            "conexion": 1,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 1
+        },
+        {
+            "nombre_estacion": "General San Martín",
+            "latitud": -34.5950,
+            "longitud": -58.3825,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Lavalle",
+            "latitud": -34.6025,
+            "longitud": -58.3811,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Diagonal Norte",
+            "latitud": -34.6081,
+            "longitud": -58.3772,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 1
+        },
+        {
+            "nombre_estacion": "Avenida de Mayo",
+            "latitud": -34.6097,
+            "longitud": -58.3831,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Moreno",
+            "latitud": -34.6111,
+            "longitud": -58.3858,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Independencia",
+            "latitud": -34.6142,
+            "longitud": -58.3922,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "San Juan",
+            "latitud": -34.6172,
+            "longitud": -58.3981,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Constitución",
+            "latitud": -34.6281,
+            "longitud": -58.4017,
+            "conexion": 1,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 1
+        }
+    ]
+}

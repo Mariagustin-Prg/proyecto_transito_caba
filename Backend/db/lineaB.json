@@ -1,0 +1,137 @@
+{
+    "Linea": "B",
+    "__init__": {
+        "nombre_linea": "Linea B",
+        "codigo": "LineaB",
+        "direccion": 0,
+        "actividad": 1
+    },
+    "Estaciones": [
+        {
+            "nombre_estacion": "Juan Manuel de Rosas",
+            "latitud": -34.5833,
+            "longitud": -58.4814,
+            "conexion": 0,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Echeverría",
+            "latitud": -34.5771,
+            "longitud": -58.4783,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Los Incas - Parque Chas",
+            "latitud": -34.5731,
+            "longitud": -58.4717,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Tronador - Villa Ortúzar",
+            "latitud": -34.5686,
+            "longitud": -58.4639,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Federico Lacroze",
+            "latitud": -34.5611,
+            "longitud": -58.4517,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 1
+        },
+        {
+            "nombre_estacion": "Dorrego",
+            "latitud": -34.5542,
+            "longitud": -58.4458,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Ángel Gallardo",
+            "latitud": -34.5492,
+            "longitud": -58.4383,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Medrano",
+            "latitud": -34.5442,
+            "longitud": -58.4333,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Carlos Gardel",
+            "latitud": -34.5389,
+            "longitud": -58.4258,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Pueyrredón",
+            "latitud": -34.5358,
+            "longitud": -58.4183,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Callao",
+            "latitud": -34.5308,
+            "longitud": -58.4111,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Uruguay",
+            "latitud": -34.5261,
+            "longitud": -58.4042,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Carlos Pellegrini",
+            "latitud": -34.5233,
+            "longitud": -58.3972,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 1
+        },
+        {
+            "nombre_estacion": "Leandro N. Alem",
+            "latitud": -34.6175,
+            "longitud": -58.3689,
+            "conexion": 0,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 0
+        }
+    ]
+}

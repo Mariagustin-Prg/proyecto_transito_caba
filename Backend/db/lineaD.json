@@ -1,0 +1,155 @@
+{
+    "Linea": "D",
+    "__init__": {
+        "nombre_linea": "Linea D",
+        "codigo": "LineaD",
+        "direccion": 0,
+        "actividad": 1
+    },
+    "Estaciones": [
+        {
+            "nombre_estacion": "Catedral",
+            "latitud": -34.6083,
+            "longitud": -58.3739,
+            "conexion": 1,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 1
+        },
+        {
+            "nombre_estacion": "9 de Julio",
+            "latitud": -34.6037,
+            "longitud": -58.3816,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Tribunales",
+            "latitud": -34.5992,
+            "longitud": -58.3861,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Callao",
+            "latitud": -34.5961,
+            "longitud": -58.3925,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Facultad de Medicina",
+            "latitud": -34.5950,
+            "longitud": -58.4000,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Pueyrredón",
+            "latitud": -34.5886,
+            "longitud": -58.4061,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Aguero",
+            "latitud": -34.5861,
+            "longitud": -58.4108,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Bulnes",
+            "latitud": -34.5825,
+            "longitud": -58.4153,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Scalabrini Ortiz",
+            "latitud": -34.5786,
+            "longitud": -58.4211,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Plaza Italia",
+            "latitud": -34.5736,
+            "longitud": -58.4247,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Palermo",
+            "latitud": -34.5681,
+            "longitud": -58.4269,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Ministro Carranza",
+            "latitud": -34.5611,
+            "longitud": -58.4350,
+            "conexion": 1,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Olleros",
+            "latitud": -34.5542,
+            "longitud": -58.4481,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "José Hernández",
+            "latitud": -34.5500,
+            "longitud": -58.4542,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Juramento",
+            "latitud": -34.5461,
+            "longitud": -58.4600,
+            "conexion": 0,
+            "terminal": 0,
+            "actividad": 1,
+            "anden_central": 0
+        },
+        {
+            "nombre_estacion": "Congreso de Tucumán",
+            "latitud": -34.5411,
+            "longitud": -58.4661,
+            "conexion": 0,
+            "terminal": 1,
+            "actividad": 1,
+            "anden_central": 1
+        }
+    ]
+}
