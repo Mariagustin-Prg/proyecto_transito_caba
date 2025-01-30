@@ -284,7 +284,7 @@ if __name__ == "__main__":
     ]}
 
     try:
-        result_test = def_movils(response_json)
+        result_test = transform_forecast(response_json)
 
     except KeyError as e:
         # print(response_json.keys())
