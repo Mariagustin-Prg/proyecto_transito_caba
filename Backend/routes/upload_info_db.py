@@ -4,7 +4,7 @@ from ..models import (
     movil_subte
 )
 # from Backend.schemas.db_client import clientDB
-import json
+import json, time, datetime
 
 
 def create_LineaSubte(dict_linea: dict) -> linea_subte.LineaSubte:
@@ -156,17 +156,140 @@ def json_to_SubteObject(route_file: str) -> dict:
     
     except KeyError as e:
         raise KeyError(f"Error en la clave: {e}")
-    
+
+
+def transform_forecast(forecast_dict: dict) -> movil_subte.MovilSubte:
+    try:
+        list_to_return = []
+
+        response: list = forecast_dict['Entity']
+
+        for line_info in response:
+            _ID_ = line_info['ID']
+            line: dict = line_info['Linea']
+
+            ObjLinea = linea_subte.LineaSubte(
+                nombre_linea= line['Route_Id'],
+                codigo= _ID_,
+                direccion= line['Direction_ID']
+                )
+            
+            ObjLinea.activacion_servicio()
+
+            start_time = datetime.time(hour= int(line['start_time'][:2]),
+                                       minute= int(line['start_time'][3:5]),
+                                       second= int(line['start_time'][6:]))
+
+            start_date = datetime.date(year= int(line['start_date'][:4]),
+                                       month= int(line['start_date'][4:6]),
+                                       day= int(line['start_date'][6:]))
+            
+            timestamp_as_datetime = datetime.datetime.fromtimestamp(line['Estaciones'][-1]['arrival']['time'])
+
+            vehiculo = movil_subte.MovilSubte(
+                fecha_inicio = start_date,
+                linea_de_viaje= ObjLinea,
+                horario_programado_salida = start_time,
+                fecha_fin= (
+                    start_date 
+                    if start_time < timestamp_as_datetime.time()
+                    else start_date + datetime.timedelta(days=1)
+                ),
+                horario_programado_llegada= timestamp_as_datetime.time(),
+                codigo_vehiculo= line["Trip_Id"]
+                )
+
+            for station in line['Estaciones']:
+                station_name = station['stop_name']
+
+                ObjStation = movil_subte.EstacionTemp(station_name)
+                ObjStation.set_schedule(
+                                        _arrivo = station['arrival']["time"],
+                                        _salida = station['departure']['time'],
+                                        _retraso = station['departure']['delay']
+                                        )
+                
+                list_to_return.append(
+                    {
+                        "Vehiculo_Id": vehiculo.codigo_vehiculo,
+                        "Vehiculo_Info": vehiculo.to_dict(),
+                        "Linea": ObjLinea.__dict__,
+                        "Estacion": station_name,
+                        "Estacion_Info": ObjStation.__dict__
+                    }
+                )
+
+
+        return list_to_return
+                
+
+
+
+
+    except KeyError as k:
+        raise KeyError(f"No se encontró la clave: {k}")
 
 if __name__ == "__main__":
-    file = "Backend/db/lineaA.json"
+    # file = "Backend/db/lineaA.json"
 
-    subte = json_to_SubteObject(file)
+    # subte = json_to_SubteObject(file)
 
-    # print(subte)
+    # # print(subte)
 
-    print(subte['Linea'].__listar__())
+    # print(subte['Linea'].__listar__())
 
-    subte['Linea'].direccion = 1
+    # subte['Linea'].direccion = 1
 
-    print("\n", subte['Linea'].__listar__())
+    # print("\n", subte['Linea'].__listar__())
+
+
+    import requests as rq
+    import pprint, os
+    from dotenv import load_dotenv
+
+    load_dotenv(dotenv_path="../config/.env")
+
+    CLIENT_ID = os.getenv("CLIENT_ID")
+    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+    
+    response = rq.get(f"https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}")
+
+    response_json : dict = response.json()
+
+    json_test = {'Entity': [
+        {
+        "ID": "LineaA_A11",
+        "Linea": {
+            "Trip_Id": "A11",
+            "Route_Id": 'LineaA',
+            "Direction_Id": 1,
+            "start_time": "10:07:00",
+            "start_date": "20250110",
+            "Estaciones": [
+                {
+                    "stop_id": "1059N",
+                    "stop_name": "San Pedrito",
+                    "arrival": {
+                        "time": 1738078935,
+                        "delay": 504
+                    },
+                    "departure": {
+                        "time": 1738078959,
+                        "delay": 542
+                    }
+                }
+            ]
+            }
+        }
+    ]}
+
+    try:
+        result_test = def_movils(response_json)
+
+    except KeyError as e:
+        # print(response_json.keys())
+        raise KeyError(e)
+    # finally:
+        # print(response_json)
+
+    pprint.pprint(result_test)

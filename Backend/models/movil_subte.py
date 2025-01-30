@@ -29,6 +29,25 @@ from Backend.models.linea_subte import LineaSubte
 from Backend.models.estacion_subte import EstacionSubte
 from datetime import date, time, datetime
 
+class EstacionTemp(EstacionSubte):
+    def __init__(self, nombre_estacion: str = None) -> None:
+        super().__init__(nombre_estacion= nombre_estacion)
+        self.__arrival__ = None
+        self.__departure__ = None
+        self.__delay__ = None
+
+    def set_schedule(self, _arrivo, _salida, _retraso) -> None:
+        self.__arrival__ = datetime.fromtimestamp(_arrivo)
+        self.__departure__ = datetime.fromtimestamp(_salida)
+        self.__delay__: int = _retraso
+
+    def to_dict(self) -> dict:
+        return {
+            "Arrivo": self.__arrival__,
+            "Salida": self.__departure__,
+            "Retraso": self.__delay__
+        }
+
 class MovilSubte:
     
     '''
@@ -64,10 +83,10 @@ class MovilSubte:
     
     def __init__(self,
                  fecha_inicio: date,
-                 fecha_fin: date,
                  linea_de_viaje: LineaSubte,
                  horario_programado_salida: time,
-                 horario_programado_llegada: time,
+                 fecha_fin: date = None,
+                 horario_programado_llegada: time = None,
                  retraso: int | None = None,
                  codigo_vehiculo: str | None = None,
                  ) -> None:
@@ -77,18 +96,18 @@ class MovilSubte:
 
         args:
             `fecha_inicio`: Fecha en que inicia el viaje.
-            `fecha_fin`: Fecha en la que finaliza el viaje.
             `linea_de_viaje`: Linea en la que se moverá el vehículo.
             `horario_programado_salida`: Horario programado de salida.
+            `fecha_fin`: Fecha en la que finaliza el viaje.
             `horario_programado_llegada`: Horario programada de llegada a la estación terminal.
             `retraso`: Retraso del vehículo, medido en segundos.
             `codigo_vehículo`: Código de identificación del vehículo.
         '''
 
         self.fecha_inicio = fecha_inicio
-        self.fecha_fin = fecha_fin
         self.linea = linea_de_viaje
         self.time_salida = horario_programado_salida
+        self.fecha_fin = fecha_fin
         self.time_llegada = horario_programado_llegada
         self.retraso = retraso
         self.codigo_vehiculo = codigo_vehiculo
@@ -111,11 +130,6 @@ class MovilSubte:
         '''
         return f"Vehículo({self.codigo_vehiculo})"
     
-    # def __repr__(self) -> str:
-    #     '''
-    #     Permite obtener una representación del objeto.
-    #     '''
-    #     return f"Vehículo({self.codigo_vehiculo})"
     
     def __eq__(self, other) -> bool:
         '''
@@ -134,3 +148,16 @@ class MovilSubte:
         Devuelve una lista con las estaciones de la línea.
         '''
         return self.linea.estaciones
+    
+    def to_dict(self):
+        return {
+            'fecha_inicio': self.fecha_inicio,
+            'linea': self.linea,
+            'time_salida': self.time_salida,
+            'fecha_fin': self.fecha_fin,
+            'time_llegada': self.time_llegada,
+            'retraso': self.retraso,
+            'codigo_vehiculo': self.codigo_vehiculo,
+            '__create__': self.__create__,
+            '__update__': self.__update__
+            }
