@@ -133,4 +133,7 @@ class MovilSubte:
         '''
         Devuelve una lista con las estaciones de la línea.
         '''
-        return self.linea.estaciones
+        return self.linea.estaciones()
+
+    
+
