@@ -63,6 +63,7 @@ class LineaSubte:
     def __repr__(self):
         return self.nombre_linea
 
+
     def __listar__(self) -> str:
         '''
         Devuelve un string con el nombre de las estaciones de la línea. 
@@ -116,3 +117,22 @@ class LineaSubte:
         return estaciones
 
         
+
+        station_ctrl = self.terminal_inicio
+
+        while station_ctrl != None:
+            self.estaciones.append(station_ctrl)
+
+            station_ctrl = station_ctrl.siguiente
+
+    def search_station(self, station: str) -> None:
+        search = self.terminal_inicio
+
+        while search != None:
+            if search.nombre_estacion:
+                return search
+            
+            search = search.siguiente
+
+
+        return None
