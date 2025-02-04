@@ -65,6 +65,7 @@ class EstacionSubte:
         self.terminal = terminal
         self.actividad = actividad
         self.anden_central = anden_central
+
         self.special_case = None
 
     def __str__(self) -> None:
@@ -151,3 +152,10 @@ class EstacionSubte:
         '''Establece la relación de orden con la estación anterior.'''
         if anterior != self:
             self.anterior = anterior
+
+
+    def to_json(self) -> dict:
+        return {
+            k[5:]: va
+            for k, va in self.__dict__.values()
+        }
