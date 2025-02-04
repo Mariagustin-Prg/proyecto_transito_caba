@@ -1,12 +1,14 @@
 # Proyecto de Transito de Ciudad de Buenos Aires
 
+![Proyecto_de_Transito_de_Ciudad_de_Buenos_Aires](https://th.bing.com/th/id/R.9f5d364622231beb6608f946e178ac84?rik=%2fhyTZBWNGsaXhg&pid=ImgRaw&r=0)
 ---------
-[![Python](https://img.shields.io/badge/Python-3.11+-fff?style=for-the-badge&logo=python&logoColor=white&labelColor=3776AB)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-version+-fff?logo=fastapi&logoColor=white&labelColor=009688&style=for-the-badge)](https://fastapi.tiangolo.com)
-[![MongoDB](https://img.shields.io/badge/MongoDB-version+-fff?logo=mongodb&logoColor=white&style=for-the-badge&labelColor=47a248)](https://www.mongodb.com)
+
+[![Python](https://img.shields.io/badge/Python-3.11+-dedede?style=for-the-badge&logo=python&logoColor=white&labelColor=3776AB)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.99+-dedede?logo=fastapi&logoColor=white&labelColor=009688&style=for-the-badge)](https://fastapi.tiangolo.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-8.0+-dedede?logo=mongodb&logoColor=white&style=for-the-badge&labelColor=47a248)](https://www.mongodb.com)
 [![LucidChart](https://img.shields.io/badge/LucidChart-282c33?style=for-the-badge&logo=lucid&logoColor=white)](https://lucidchart.com)
 [![PostMan](https://img.shields.io/badge/POSTMAN-FF6C37?style=for-the-badge&logo=postman&logoColor=fff)](https://www.postman.com)
-[![Render](https://img.shields.io/badge/Render-000?style=for-the-badge&logo=render&)](https://dashboard.render.com)
+[![Render](https://img.shields.io/badge/Render-000?style=for-the-badge&logo=render)](https://dashboard.render.com)
 
 Este proyecto proporciona una serie de funcionalidades mucho más amigable con el usuario para realizar distintos análisis a la red de transporte de Ciudad Autónoma de Buenos Aires.
 
@@ -15,6 +17,11 @@ Este proyecto proporciona una serie de funcionalidades mucho más amigable con e
 ```ASCCI
 ├── db
 │  ├── lineaA.json
+│  ├── lineaB.json
+│  ├── lineaC.json
+│  ├── lineaD.json
+│  ├── lineaE.json
+│  ├── lineaH.json
 │  ├── __calls__.json
 │  └── __data__.json
 ├── logs
