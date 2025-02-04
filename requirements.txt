@@ -3,5 +3,6 @@ gunicorn
 requests
 python-dotenv
 motor
+pymongo
 httpx
 pytest
