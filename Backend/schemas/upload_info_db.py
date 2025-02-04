@@ -158,6 +158,24 @@ def json_to_SubteObject(route_file: str) -> dict:
         raise KeyError(f"Error en la clave: {e}")
     
 
+def dict_Forecast_to_Objects(_dict_) -> None:
+    '''
+    method:
+    dict_Forecast_to_Objects(dict):
+        Convierte un diccionario en objetos.
+
+    args:
+        `dict`: Diccionario con los datos.
+
+    return:
+        None.
+    '''
+    pass
+
+
+
+
+
 if __name__ == "__main__":
     file = "Backend/db/lineaA.json"
 
